@@ -26,6 +26,7 @@ RUN apt-get update \
         git-flow \
         vim \
         tmux \
+        mycli \
     && rm -r /var/lib/apt/lists/*
 
 # 配置git
