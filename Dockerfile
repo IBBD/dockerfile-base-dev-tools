@@ -21,9 +21,7 @@ ADD ext/sources.list   /etc/apt/sources.list
 
 # 安装公共开发工具的工具
 RUN \
-    curl https://packagecloud.io/gpg.key | apt-key add - \
-    && echo "deb https://packagecloud.io/amjith/mycli/ubuntu/ trusty main" | tee -a /etc/apt/sources.list \
-    && apt-get update \
+    apt-get update \
     && apt-get install -y \
         apt-transport-https \
         git \
