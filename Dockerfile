@@ -30,7 +30,10 @@ RUN \
         git-flow \
         vim \
         tmux \
-        mycli \
+        python-pip python-dev build-essential \
+    && pip install --upgrade pip \
+    && pip install --upgrade virtualenv \
+    && pip install mycli \
     && rm -r /var/lib/apt/lists/*
 
 # 配置git
