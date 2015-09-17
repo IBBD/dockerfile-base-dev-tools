@@ -33,7 +33,7 @@ RUN \
     && pip install --upgrade pip \
     && pip install --upgrade virtualenv \
     && pip install mycli \
-    && sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" \
+    && chsh -s /usr/bin/zsh \
     && rm -r /var/lib/apt/lists/*
 
 # 配置系统
@@ -45,17 +45,20 @@ RUN \
 # 解决时区问题
 ENV LC_ALL zh_CN.UTF-8
 ENV TZ "Asia/Shanghai"
+ENV SHELL /usr/bin/zsh
 
 # 配置git
 RUN git config --global push.default simple
 
 # 安装vim插件
 # 解决vim中文显示的问题
+# install oh-my-zsh
 ADD ext/spf13-vim.sh /spf13-vim.sh 
 RUN sh /spf13-vim.sh \
     && echo "set fileencodings=utf-8" >> /etc/vim/vimrc \
     && echo "set fileencoding=utf-8" >> /etc/vim/vimrc \
     && echo "set encoding=utf-8" >> /etc/vim/vimrc \
+    && sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" \
     && rm -f /spf13-vim.sh
 
 ADD ext/vimrc.local  /root/.vimrc.local
