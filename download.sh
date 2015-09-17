@@ -26,6 +26,7 @@ fi
 # vim配置文件
 filename=spf13-vim.sh
 curl https://j.mp/spf13-vim3 -L > $filename
+chmod +x $filename
 
 # 判断是否操作成功
 filesize=$(ls -l $filename | awk '{ print $5 }')
@@ -35,6 +36,18 @@ then
     exit 1
 fi
 
+# oh-my-zsh 
+filename=oh-my-zsh.sh
+curl https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -L > $filename
+chmod +x $filename
+
+# 判断是否操作成功
+filesize=$(ls -l $filename | awk '{ print $5 }')
+if [ $filesize -lt 10 ]
+then
+    echo "$filename is empty!"
+    exit 1
+fi
 
 echo "===> Finish!"
 

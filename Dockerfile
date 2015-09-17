@@ -17,6 +17,7 @@ MAINTAINER Alex Cai "cyy0523xc@gmail.com"
 # git clone git@github.com:IBBD/docker-compose.git
 # 如果导致apt-get Install不成功，可以先注释这句
 ADD ext/sources.list   /etc/apt/sources.list
+ADD ext/oh-my-zsh.sh   /oh-my-zsh.sh
 
 # 安装公共开发工具的工具
 RUN \
@@ -27,20 +28,23 @@ RUN \
         git-flow \
         vim \
         tmux \
+        zsh \
         python-pip python-dev build-essential \
     && pip install --upgrade pip \
     && pip install --upgrade virtualenv \
     && pip install mycli \
+    && sh -c /oh-my-zsh.sh \
+    && rm -f /oh-my-zsh.sh \
     && rm -r /var/lib/apt/lists/*
 
 # 配置系统
-RUN \
-    dpkg-reconfigure locales \
-    && locale-gen zh_CN.UTF-8 \
-    && /usr/sbin/update-locale LANG=zh_CN.UTF-8
+#RUN \
+    #dpkg-reconfigure locales \
+    #&& locale-gen zh_CN.UTF-8 \
+    #&& /usr/sbin/update-locale LANG=zh_CN.UTF-8
 
 # 解决时区问题
-ENV LC_ALL zh_CN.UTF
+ENV LC_ALL zh_CN.UTF-8
 ENV TZ "Asia/Shanghai"
 
 # 配置git
@@ -49,12 +53,14 @@ RUN git config --global push.default simple
 # 安装vim插件
 # 解决vim中文显示的问题
 ADD ext/spf13-vim.sh /spf13-vim.sh 
-RUN sh spf13-vim.sh \
+RUN sh /spf13-vim.sh \
     && echo "set fileencodings=utf-8" >> /etc/vim/vimrc \
     && echo "set fileencoding=utf-8" >> /etc/vim/vimrc \
-    && echo "set encoding=utf-8" >> /etc/vim/vimrc 
+    && echo "set encoding=utf-8" >> /etc/vim/vimrc \
+    && rm -f /spf13-vim.sh
 
 ADD ext/vimrc.local  /root/.vimrc.local
+ADD ext/bashrc       /root/.bashrc
 
 # 代码目录
 RUN mkdir -p /var/www 
