@@ -28,12 +28,11 @@ RUN \
         git-flow \
         vim \
         tmux \
-        zsh \
         python-pip python-dev build-essential \
     && pip install --upgrade pip \
     && pip install --upgrade virtualenv \
     && pip install mycli \
-    && chsh -s /usr/bin/zsh \
+    && git config --global push.default simple \
     && rm -r /var/lib/apt/lists/*
 
 # 配置系统
@@ -45,10 +44,6 @@ RUN \
 # 解决时区问题
 ENV LC_ALL zh_CN.UTF-8
 ENV TZ "Asia/Shanghai"
-ENV SHELL /usr/bin/zsh
-
-# 配置git
-RUN git config --global push.default simple
 
 # 安装vim插件
 # 解决vim中文显示的问题
