@@ -53,13 +53,14 @@ RUN git config --global push.default simple
 # 安装vim插件
 # 解决vim中文显示的问题
 # install oh-my-zsh
+#&& sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" \
+#&& sed -i -E "s/^plugins=\((.*)\)$/plugins=(\1 tmux)/" ~/.zshrc \
+# 一直报错：sh: 52: /root/.zshrc: Syntax error: "(" unexpected")"
 ADD ext/spf13-vim.sh /spf13-vim.sh 
 RUN sh /spf13-vim.sh \
     && echo "set fileencodings=utf-8" >> /etc/vim/vimrc \
     && echo "set fileencoding=utf-8" >> /etc/vim/vimrc \
     && echo "set encoding=utf-8" >> /etc/vim/vimrc \
-    && sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" \
-    && sed -i -E "s/^plugins=\((.*)\)$/plugins=(\1 tmux)/" ~/.zshrc \
     && rm -f /spf13-vim.sh
 
 ADD ext/vimrc.local  /root/.vimrc.local

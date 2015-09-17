@@ -14,6 +14,6 @@
 
 - 关于spf13-vim插件：http://vim.spf13.com/ 
 - 关于mycli：https://github.com/dbcli/mycli 
-- 关于oh-my-zsh插件: http://ohmyz.sh/ 
+- 关于oh-my-zsh插件: http://ohmyz.sh/ （按照官方的方法，自动构建一直error，所以暂时未安装该插件）
 
 
