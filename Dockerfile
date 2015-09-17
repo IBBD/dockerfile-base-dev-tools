@@ -38,8 +38,13 @@ RUN \
 RUN git config --global push.default simple
 
 # 安装vim插件
+# 解决vim中文显示的问题
+# 解决安装spf13之后，终端输入不了中文的问题
 ADD ext/spf13-vim.sh /spf13-vim.sh 
-RUN sh spf13-vim.sh 
+RUN sh spf13-vim.sh \
+    && echo "set fileencodings=utf-8" >> /etc/vim/vimrc \
+    && echo "set fileencoding=utf-8" >> /etc/vim/vimrc \
+    && echo "set encoding=utf-8" >> /etc/vim/vimrc 
 
 # 代码目录
 RUN mkdir -p /var/www 
