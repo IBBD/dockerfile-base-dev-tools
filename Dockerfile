@@ -17,7 +17,7 @@ MAINTAINER Alex Cai "cyy0523xc@gmail.com"
 # git clone git@github.com:IBBD/docker-compose.git
 # 如果导致apt-get Install不成功，可以先注释这句
 #ADD ext/sources.list   /etc/apt/sources.list
-ADD ext/oh-my-zsh.sh   /oh-my-zsh.sh
+#ADD ext/oh-my-zsh.sh   /oh-my-zsh.sh
 
 # 安装公共开发工具的工具
 RUN \
@@ -33,8 +33,7 @@ RUN \
     && pip install --upgrade pip \
     && pip install --upgrade virtualenv \
     && pip install mycli \
-    && sh -c /oh-my-zsh.sh \
-    && rm -f /oh-my-zsh.sh \
+    && sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" \
     && rm -r /var/lib/apt/lists/*
 
 # 配置系统
