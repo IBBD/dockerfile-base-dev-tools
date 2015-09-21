@@ -24,6 +24,7 @@ RUN \
     apt-get update \
     && apt-get install -y \
         apt-transport-https \
+        man \
         git \
         git-flow \
         vim \
@@ -42,7 +43,8 @@ RUN \
     #&& /usr/sbin/update-locale LANG=zh_CN.UTF-8
 
 # 解决时区问题
-ENV LC_ALL zh_CN.UTF-8
+# 设置编码有问题
+#ENV LC_ALL zh_CN.UTF-8
 ENV TZ "Asia/Shanghai"
 
 # 安装vim插件
@@ -51,8 +53,10 @@ ENV TZ "Asia/Shanghai"
 #&& sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)" \
 #&& sed -i -E "s/^plugins=\((.*)\)$/plugins=(\1 tmux)/" ~/.zshrc \
 # 一直报错：sh: 52: /root/.zshrc: Syntax error: "(" unexpected")"
-ADD ext/spf13-vim.sh /spf13-vim.sh 
-RUN sh /spf13-vim.sh \
+# 如果是本地构建，使用预先下载的形式
+#ADD ext/spf13-vim.sh /spf13-vim.sh 
+#RUN sh /spf13-vim.sh \
+RUN curl http://j.mp/spf13-vim3 -L -o - | sh \
     && echo "set fileencodings=utf-8" >> /etc/vim/vimrc \
     && echo "set fileencoding=utf-8" >> /etc/vim/vimrc \
     && echo "set encoding=utf-8" >> /etc/vim/vimrc \
