@@ -24,12 +24,15 @@ RUN \
     apt-get update \
     && apt-get install -y \
         apt-transport-https \
+        build-essential \
         man \
         git \
         git-flow \
         vim \
         tmux \
-        python-pip python-dev build-essential \
+        python-dev \
+        python-pip \
+        locales \
     && pip install --upgrade pip \
     && pip install --upgrade virtualenv \
     && pip install mycli \
@@ -37,15 +40,13 @@ RUN \
     && rm -r /var/lib/apt/lists/*
 
 # 配置系统
-#RUN \
-    #dpkg-reconfigure locales \
-    #&& locale-gen zh_CN.UTF-8 \
-    #&& /usr/sbin/update-locale LANG=zh_CN.UTF-8
+RUN dpkg-reconfigure locales \
+    && locale-gen C.UTF-8 \
+    && /usr/sbin/update-locale LANG=C.UTF-8
 
 # 解决时区问题
-# 设置编码有问题
-#ENV LC_ALL zh_CN.UTF-8
 ENV TZ "Asia/Shanghai"
+ENV LC_ALL C.UTF-8
 
 # 安装vim插件
 # 解决vim中文显示的问题
